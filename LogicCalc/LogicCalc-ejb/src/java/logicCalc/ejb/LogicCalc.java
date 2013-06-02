@@ -14,8 +14,19 @@ import javax.ejb.LocalBean;
 @Stateless
 @LocalBean
 public class LogicCalc {
+    
+public static Calculator calc;
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
+    public String calculate(String inString)
+    {
+        calc = new Calculator(inString);
+        
+        String outString = calc.startCalc();
+        return outString;
+    }
+    public String errorCheck(String inString)
+    {
+        String outString = this.calculate(inString);
+        return outString;
+    }
 }

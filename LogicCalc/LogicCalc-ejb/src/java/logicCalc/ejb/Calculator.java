@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Tim
+ * @author Tim Nielsen
  */
 public  class Calculator 
 {
@@ -19,15 +19,19 @@ public  class Calculator
     public Calculator(String calcInString)
     {
         inString = calcInString;
-        String pattern = createPattern(inString.length());
+        String pattern = createPattern(inString.length());//Bygger pattern
         Pattern r = Pattern.compile(pattern);
         m = r.matcher(inString);
         m.find();
-       checkForBrackets(0); 
     }
-    public static void checkForBrackets(int startingPoint)
+    public String startCalc()
     {
-       int i = startingPoint+1;
+       checkForBrackets(0);
+       return inString;
+    }
+    public static void checkForBrackets(int startingPoint) // utför alla beräkningar
+    {
+       int i = startingPoint+1;//Måste ökas med ett så att den inte hittar sig själv 
        
        //Kollar om det finns ett ( anropar sig själv tills den inte hittar mer 
         while(i < m.groupCount())
@@ -38,8 +42,8 @@ public  class Calculator
             }
             i++;
         }
-        //Utför logick beräkningar nån sorts while loops som körs tills den hittar ett ) eller EOF
-        //Om man ökar i med 1 varje gång kan man plussa den på grupperna allltså startPunkt+2+i
+        //Utför logik beräkningar, while loop som körs tills den hittar EOF
+        //Körs tills det bara finns ett tecken kvar tex 1 eller det bara finns kvar en siffra och två paranteser tex (1) 
         i = 0;
         boolean closingBracketFound = false;
         boolean notOperandFound = false;
@@ -47,25 +51,25 @@ public  class Calculator
         {
             if(!m.group(startingPoint+2).equals(")"))
             {
-                if(m.group(startingPoint+2).equals("&"))
+                if(m.group(startingPoint+2).equals("&"))// AND
                 {
                     if(m.group(startingPoint+1).equals("1") && m.group(startingPoint+3).equals("1"))
-                    {
-                        if(notOperandFound)
-                            updateStringAndPatter(startingPoint,'0');
+                    {//Om det är sant
+                        if(notOperandFound) // Om ett NOT tecken fanns innan tex !1&1
+                            updateStringAndPatter(startingPoint,'0');//Anropar en metod som updater inString och m så att grupperna stämmer
                         else
                             updateStringAndPatter(startingPoint,'1');
                         notOperandFound = false;
                     }
                     else
-                    {
+                    {//Om det är falskt
                         if(notOperandFound)
                             updateStringAndPatter(startingPoint,'1');
                         else
                             updateStringAndPatter(startingPoint,'0');
                     }
                 }
-                else if(m.group(startingPoint+2).equals("|"))
+                else if(m.group(startingPoint+2).equals("|")) // OR
                 {
                     if(m.group(startingPoint+1).equals("1") || m.group(startingPoint+3).equals("1"))
                     {
@@ -84,7 +88,7 @@ public  class Calculator
                         notOperandFound = false;  
                     }
                 }
-                else if(m.group(startingPoint+2).equals("^"))
+                else if(m.group(startingPoint+2).equals("^")) // XOR
                 {
                     if((m.group(startingPoint+1).equals("1") && m.group(startingPoint+3).equals("1")) 
                                 || (m.group(startingPoint+1).equals("0") && m.group(startingPoint+3).equals("0")))
@@ -111,7 +115,7 @@ public  class Calculator
                 }
             }
             else
-            {
+            {//Om man hittat ett ')' så tas allt som finns på sidorna om det sista tecknet borts och while loopen bryts
                 closingBracketFound = true;
                 inString = inString.substring(0,startingPoint-1)+inString.charAt(startingPoint)+inString.substring(startingPoint+2);
                 String pattern = createPattern(inString.length());
@@ -119,12 +123,9 @@ public  class Calculator
                 m = r.matcher(inString);
                 m.find();
             }
-        }
-        //Finns det inte en opernad som andra tecken måste det alltså finnas ett !0&1 före det vikitga den görs här efter som ()<&<|<!
-        //hur det skall göras vet jag inte
-        
+        }        
     }
-    public static void updateStringAndPatter(int startPunkt,char value)
+    public static void updateStringAndPatter(int startPunkt,char value)//Updaterar inString och Matcher m
     {
         inString = inString.substring(0,startPunkt)+value+inString.substring(startPunkt+3);
         String pattern = createPattern(inString.length());
@@ -132,7 +133,7 @@ public  class Calculator
         m = r.matcher(inString);
         m.find();
     }
-    public static void notOperandRemoval(int startPunkt)
+    public static void notOperandRemoval(int startPunkt)//Updaterar inString och Matcher m tar bort !
     {
         inString = inString.substring(0,startPunkt)+inString.substring(startPunkt+1);
         String pattern = createPattern(inString.length());
@@ -140,7 +141,7 @@ public  class Calculator
         m = r.matcher(inString);
         m.find();
     }
-    public static String createPattern(int patternLength)
+    public static String createPattern(int patternLength)//Tar antal tecken i inString som inparameter returnerar pattern som används i matchern
     {
         StringBuilder sb = new StringBuilder();
         
