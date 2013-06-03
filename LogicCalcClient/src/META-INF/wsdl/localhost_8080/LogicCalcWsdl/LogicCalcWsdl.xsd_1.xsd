@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.2.0-1 (tags/2.2.0u1-7139; 2012-06-02T10:55:19+0000) JAXWS-RI/2.2.6-2 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://ejb.logicCalc/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ejb.logicCalc/">
+
+<xs:element name="calculate" type="tns:calculate"/>
+
+<xs:element name="calculateResponse" type="tns:calculateResponse"/>
+
+<xs:element name="errorCheck" type="tns:errorCheck"/>
+
+<xs:element name="errorCheckResponse" type="tns:errorCheckResponse"/>
+
+<xs:element name="finalErrorCheck" type="tns:finalErrorCheck"/>
+
+<xs:element name="finalErrorCheckResponse" type="tns:finalErrorCheckResponse"/>
+
+<xs:complexType name="errorCheck">
+<xs:sequence>
+<xs:element name="checkString" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="errorCheckResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="calculate">
+<xs:sequence>
+<xs:element name="inString" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="calculateResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="finalErrorCheck">
+<xs:sequence>
+<xs:element name="checkString" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="finalErrorCheckResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
