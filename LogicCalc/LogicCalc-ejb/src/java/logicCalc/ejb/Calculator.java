@@ -152,4 +152,40 @@ public  class Calculator
         
         return sb.toString();
     }
+    
+    public static String errorCheck(String checkString)
+    {
+        String errorCheckResult = null;
+        
+        for(int i=0 ; i<(checkString.length()-1) ; i++)
+        {
+            if(checkString.charAt(i) == checkString.charAt(i+1))
+            {
+                errorCheckResult += "You have placed a \"1\" / \"0\" / \"|\" / \"&\" after each other\n";
+            }
+        }
+        //kollar om ^ ,|  eller & är felplacerade
+        if(checkString.indexOf("(&")>0 || checkString.indexOf("&)")>0 || checkString.indexOf("(|")>0 || checkString.indexOf("|)")>0 || 
+                checkString.indexOf("^(")>0 || checkString.indexOf("^)")>0)
+        {
+            errorCheckResult += "You have placed a \"|\" , \"&\" or a \"^\" before or after a bracket\n";
+        }
+        else if(checkString.indexOf("1(")>0 || checkString.indexOf("0(")>0 || checkString.indexOf(")1")>0 || 
+                checkString.indexOf(")0")>0 || checkString.startsWith("1(") || checkString.startsWith("0("))
+        {
+            errorCheckResult += "You have placed a \"1\" or a \"0\" before or after a bracket\n";
+        }
+        //kollar om NOT(!) ligger rätt
+        else if(checkString.indexOf("!^")>0 || checkString.indexOf("!&")>0 || checkString.indexOf("!|")>0 || checkString.indexOf("!)")>0)
+        {
+            errorCheckResult += "You have placed \"!\" in a wrong position";
+        }
+        //kollar om kalkylatorn startar med fel tecken
+        else if(checkString.startsWith("|") || checkString.startsWith("&") || checkString.startsWith(")") || checkString.startsWith("^"))
+        {
+            errorCheckResult += "You have to start the calculation with a digit, \"(\" or a \"!\"";
+        }
+             
+        return errorCheckResult;     
+    }
 }
