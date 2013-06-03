@@ -157,12 +157,11 @@ public  class Calculator
     {
         String errorCheckResult = null;
         
-        for(int i=0 ; i<(checkString.length()-1) ; i++)
+        if(checkString.indexOf("00")>0 || checkString.indexOf("11")>0 || checkString.indexOf("&&")>0 ||
+                checkString.indexOf("^^")>0 || checkString.indexOf("||")>0 || checkString.startsWith("00") || 
+                checkString.startsWith("11") || checkString.startsWith("&&") || checkString.startsWith("||") || checkString.startsWith("^^"))
         {
-            if(checkString.charAt(i) == checkString.charAt(i+1))
-            {
-                errorCheckResult += "You have placed a \"1\" / \"0\" / \"|\" / \"&\" after each other\n";
-            }
+            errorCheckResult += "You have placed too many of something in a sequence\n";
         }
         //kollar om ^ ,|  eller & är felplacerade
         if(checkString.indexOf("(&")>0 || checkString.indexOf("&)")>0 || checkString.indexOf("(|")>0 || checkString.indexOf("|)")>0 || 
