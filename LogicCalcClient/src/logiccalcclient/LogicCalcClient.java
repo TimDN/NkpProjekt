@@ -108,7 +108,7 @@ public class LogicCalcClient extends JFrame
         JButton button = (JButton)event.getSource();
         if(button == jButtonSend)
         {
-            //jTextFCalcWindow.setText(calculate(jTextFCalcWindow.getText()));
+            jTextFCalcWindow.setText(calculate(jTextFCalcWindow.getText()));
             
         }
         if(button == jButtonClear)
